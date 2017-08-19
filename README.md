@@ -51,14 +51,14 @@ Para correr el servidor:
 ## Status
 Tipo y URI
 
-GET /users
+GET /ping
 Mensaje:
 
     body: {}
 
 Respuesta:
 
-	respuesta --> 200 Y 
+	respuesta --> 200
 	body: {
 		status: "ok"
 	}
