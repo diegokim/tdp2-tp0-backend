@@ -6,7 +6,7 @@ module.exports.get = (cityId) => {
     temperature: 289.5,
     pressure: 1013,
     humidity: 89,
-    wheather: 'clouds'
+    weather: 'clouds'
   })
 };
 

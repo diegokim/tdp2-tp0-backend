@@ -1,8 +1,8 @@
 /* eslint no-undef: off */
 const assert = require('chai').assert;
-const wheatherReq = require('./requests/wheather.requests.js')
+const weatherReq = require('./requests/weather.requests.js')
 
-describe('Wheather integration tests', () => {
+describe('weather integration tests', () => {
   const id = 'id';
 
   const expectedCities = [{
@@ -47,7 +47,7 @@ describe('Wheather integration tests', () => {
   }];
 
   describe('GET cities list', () => {
-    it('when get cities list should return the list of the cities', () => wheatherReq.list()
+    it('when get cities list should return the list of the cities', () => weatherReq.list()
       .then((res) => {
         const cities = res.body;
         assert.deepEqual(cities, expectedCities)
@@ -55,8 +55,8 @@ describe('Wheather integration tests', () => {
     );
   });
 
-  describe('GET city wheather', () => {
-    it('when get city should return the wheather params', () => wheatherReq.get(id)
+  describe('GET city weather', () => {
+    it('when get city should return the weather params', () => weatherReq.get(id)
       .then((res) => {
         const city = res.body;
 
@@ -64,7 +64,7 @@ describe('Wheather integration tests', () => {
         assert.notEqual(city.name, undefined);
         assert.notEqual(city.pressure, undefined);
         assert.notEqual(city.humidity, undefined);
-        assert.notEqual(city.wheather, undefined);
+        assert.notEqual(city.weather, undefined);
         assert.notEqual(city.temperature, undefined);
       })
     );
