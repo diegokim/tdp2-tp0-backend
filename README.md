@@ -52,6 +52,7 @@ Para correr el servidor:
 Tipo y URI
 
 GET /ping
+
 Mensaje:
 
     body: {}
@@ -62,3 +63,49 @@ Respuesta:
 	body: {
 		status: "ok"
 	}
+
+## GET City
+Tipo y URI
+
+GET /cities/{cityId}
+
+Mensaje:
+
+    body: {}
+
+Respuesta:
+
+	respuesta --> 200
+	body: {
+    id: 1851632,
+    name: 'Shuzenji',
+    temperature: 289.5,
+    pressure: 1013,
+    humidity: 89,
+    wheather: 'clouds'
+  }
+
+## GET Cities
+Tipo y URI
+
+GET /cities
+
+Mensaje:
+
+    body: {}
+
+Respuesta:
+
+	respuesta --> 200
+	body: [
+    {
+      id: 1283240,
+      name: 'Kathmandu',
+      country: 'NP'
+    },
+    {
+      id: 703363,
+      name: 'Laspi',
+      country: 'UA'
+    }
+  ]
