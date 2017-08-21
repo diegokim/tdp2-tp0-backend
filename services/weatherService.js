@@ -1,10 +1,7 @@
 /* eslint-disable */
 module.exports.get = (cityId) => {
   return Promise.resolve({
-    id: 1851632,
-    name: 'Shuzenji',
     temperature: 289.5,
-    pressure: 1013,
     humidity: 89,
     weather: 'clouds'
   })

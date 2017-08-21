@@ -60,9 +60,6 @@ describe('weather integration tests', () => {
       .then((res) => {
         const city = res.body;
 
-        assert.notEqual(city.id, undefined);
-        assert.notEqual(city.name, undefined);
-        assert.notEqual(city.pressure, undefined);
         assert.notEqual(city.humidity, undefined);
         assert.notEqual(city.weather, undefined);
         assert.notEqual(city.temperature, undefined);
