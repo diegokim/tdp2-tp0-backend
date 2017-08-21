@@ -16,8 +16,8 @@ module.exports.get = (cityId) => weatherClient.get(cityId)
     }
     return weather;
   })
-  .catch((err) => ({ status: err.cod, message: err.message }));
+  .catch((err) => Promise.reject({ status: err.cod, message: err.message }));
 
 module.exports.list = (keyWord) => citiesDB.get(keyWord)
   .then((citiesEntry) => citiesEntry.value)
-  .catch(() => ({ status: 404, message: 'Error while getting cities' }))
+  .catch(() => Promise.reject({ status: 404, message: 'Error while getting cities' }))
