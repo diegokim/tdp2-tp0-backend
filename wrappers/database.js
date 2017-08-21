@@ -75,5 +75,5 @@ module.exports.initialize = function () {
   });
 
   return Promise.all(promises)
-    .then(() => console.log('All cities has been migrated sucessful'));    
+    .then(() => console.log('All cities has been migrated sucessful'));
 }
