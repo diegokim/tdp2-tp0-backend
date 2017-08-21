@@ -4,6 +4,7 @@ const cors = require('cors');
 const passport = require('passport');
 
 const statusRoutes = require('./routes/statusRoutes');
+const weatherRoutes = require('./routes/weatherRoutes');
 const database = require('./wrappers/database');
 
 const app = express();
@@ -26,6 +27,9 @@ require('./config/passport')(passport);
 
 //  Status routes
 app.use(statusRoutes);
+
+//  weather route
+app.use(weatherRoutes);
 
 //  Setting the invalid enpoint message for any other route
 app.get('*', (req, res) => {
