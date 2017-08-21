@@ -1,3 +1,4 @@
+const _ = require('lodash');
 const weatherClient = require('../client/weatherClient');
 const citiesDB = require('../dbManager/citiesDB');
 
@@ -20,4 +21,5 @@ module.exports.get = (cityId) => weatherClient.get(cityId)
 
 module.exports.list = (keyWord) => citiesDB.get(keyWord)
   .then((citiesEntry) => citiesEntry.value)
+  .then((cities) => _.sortBy(cities, 'name'))
   .catch(() => Promise.reject({ status: 404, message: 'Error while getting cities' }))
