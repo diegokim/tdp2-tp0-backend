@@ -88,11 +88,13 @@ Respuesta:
 ## GET Cities
 Tipo y URI
 
-GET /cities
+POST /cities
 
 Mensaje:
 
-    body: {}
+    body: {
+      keyWord: 'a'
+    }
 
 Respuesta:
 

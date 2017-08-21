@@ -1,4 +1,7 @@
+const _ = require('lodash');
 const mongoose = require('mongoose');
+const cities = require('../city.list.json')
+const CitiesDB = require('../dbManager/citiesDB')
 
 //  Uris for production and test environment
 //  Usar variables de ambiente es mas seguro
@@ -23,25 +26,54 @@ module.exports.connect = function () {
     return;
   }
 
-  state.uri = env === this.ENV_TEST ? TEST_URI : PRODUCTION_URI;
-  mongoose.Promise = global.Promise;
-  //  Database connection
-  state.db = mongoose.connect(state.uri);
-  //  On connection
-  mongoose.connection.on('connected', () => {
-    console.log('youre now connected to the database ' + state.uri);
+  return new Promise((resolve, reject) => {
+    state.uri = env === this.ENV_TEST ? TEST_URI : PRODUCTION_URI;
+    mongoose.Promise = global.Promise;
+    //  Database connection
+    state.db = mongoose.connect(state.uri);
+    //  On connection
+    mongoose.connection.on('connected', () => {
+      console.log('youre now connected to the database ' + state.uri);
+      resolve();
+    });
+    //  On Error
+    mongoose.connection.on('error', (err) => {
+      console.log(err);
+      reject(err);
+    });
   });
-  //  On Error
-  mongoose.connection.on('error', console.log);
+
 };
 
 //  Delete database
 module.exports.drop = function () {
-  return new Promise((resolve, reject) => {
-    if (state.db) {
-      state.db.connection.db.dropDatabase();
-      return resolve();
-    }
-    reject();
-  });
+  if (state.db) {
+    return state.db.connection.db.dropDatabase();
+  }
+  return Promise.reject('Cant drop database')
 };
+
+// Initialize database
+module.exports.initialize = function () {
+  const parsedCities = {};
+
+  cities.forEach((city) => {
+    const keyWord = city.name[0] ? city.name[0].toLowerCase() : city.name[0];
+    const parsedCity = _.pick(city, ['id', 'name', 'country']);
+
+    if (parsedCities[keyWord]) {
+      parsedCities[keyWord].push(parsedCity);
+    } else {
+      parsedCities[keyWord] = [parsedCity];
+    }
+  });
+
+  const promises = [];
+  Object.keys(parsedCities).forEach((key) => {
+    const newCitiesEntry = new CitiesDB({ key, value: parsedCities[key] });
+    promises.push(CitiesDB.create(newCitiesEntry))
+  });
+
+  return Promise.all(promises)
+    .then(() => console.log('All cities has been migrated sucessful'));    
+}
