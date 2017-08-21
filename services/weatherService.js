@@ -4,13 +4,13 @@ const citiesDB = require('../dbManager/citiesDB');
 module.exports.get = (cityId) => weatherClient.get(cityId)
   .then((res) => {
     const city = res.body;
-    const timeZone = parseInt(city.coord.lon, 10) / 15;
+    const timeZone = Math.trunc(parseFloat(city.coord.lon) / 15);
     const newDate = new Date();
     const time = (newDate.getUTCHours() + timeZone) % 24;
 
     const weather = {
       time,
-      temperature: city.main.temp - 273.15,
+      temperature: Math.round(city.main.temp - 273.15),
       humidity: city.main.humidity,
       weather: city.weather[0].main.toLowerCase()
     }
