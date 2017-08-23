@@ -11,7 +11,9 @@ const app = express();
 
 const port = process.env.PORT || 8080;
 
-database.connect();
+database.connect()
+  .then(() => database.drop())
+  .then(() => database.initialize());
 
 //  Middleware cors
 app.use(cors());

@@ -1,51 +1,25 @@
-/* eslint-disable */
-module.exports.get = (cityId) => {
-  return Promise.resolve({
-    temperature: 289.5,
-    humidity: 89,
-    weather: 'clouds'
-  })
-};
+const _ = require('lodash');
+const weatherClient = require('../client/weatherClient');
+const citiesDB = require('../dbManager/citiesDB');
 
-module.exports.list = () => {
-  return Promise.resolve([{
-    id: 1283240,
-    name: 'Kathmandu',
-    country: 'NP'
-  },
-  {
-    id: 703363,
-    name: 'Laspi',
-    country: 'UA'
-  },
-  {
-    id: 3632308,
-    name: 'Merida',
-    country: 'VE'
-  },
-  {
-    id: 473537,
-    name: 'Vinogradovo',
-    country: 'RU'
-  },
-  {
-    id: 384848,
-    name: 'Qarah Gawl al ‘Ulyā',
-    country: 'IQ'
-  },
-  {
-    id: 569143,
-    name: 'Cherkizovo',
-    country: 'RU'
-  },
-  {
-    id: 713514,
-    name: 'Alupka',
-    country: 'UA'
-  },
-  {
-    id: 2878044,
-    name: 'Lichtenrade',
-    country: 'DE'
-  }])
-};
+module.exports.get = (cityId) => weatherClient.get(cityId)
+  .then((res) => {
+    const city = res.body;
+    const timeZone = Math.trunc(parseFloat(city.coord.lon) / 15);
+    const newDate = new Date();
+    const time = (newDate.getUTCHours() + timeZone) % 24;
+
+    const weather = {
+      time,
+      temperature: Math.round(city.main.temp - 273.15),
+      humidity: city.main.humidity,
+      weather: city.weather[0].main.toLowerCase()
+    }
+    return weather;
+  })
+  .catch((err) => Promise.reject({ status: err.cod, message: err.message }));
+
+module.exports.list = (keyWord) => citiesDB.get(keyWord)
+  .then((citiesEntry) => citiesEntry.value)
+  .then((cities) => _.sortBy(cities, 'name'))
+  .catch(() => Promise.reject({ status: 404, message: 'Error while getting cities' }))
