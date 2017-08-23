@@ -17,7 +17,7 @@ module.exports.list = (req, res) => {
   return keyWord === undefined ?
   aux.onError('Get cities', res, { status: 400, message: 'Missing keyWord param'}) :
   weatherService.list(keyWord)
-	  .then((cities) => res.status(200).json(cities))
+	  .then((cities) => res.status(200).json({ cities }))
   	.catch((err) => aux.onError('List cities', res, err))
 }
 

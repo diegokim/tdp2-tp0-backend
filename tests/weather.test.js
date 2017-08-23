@@ -14,7 +14,7 @@ describe('weather integration tests', function () {
 
     it('when get cities list should return the list of the cities', () => weatherReq.list(keyWord)
       .then((res) => {
-        const city = res.body[0];
+        const city = res.body.cities[0];
 
         assert.notEqual(city.id, undefined);
         assert.notEqual(city.name, undefined);
