@@ -74,6 +74,5 @@ module.exports.initialize = function () {
     promises.push(CitiesDB.create(newCitiesEntry))
   });
 
-  return Promise.all(promises)
-    .then(() => console.log('All cities has been migrated sucessful'));
+  return Promise.all(promises);
 }

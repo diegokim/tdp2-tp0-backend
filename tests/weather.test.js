@@ -8,7 +8,7 @@ describe('weather integration tests', function () {
   const id = 1283240;
   const keyWord = 'z';
 
-  describe('GET cities list', () => {
+  describe('POST cities list', () => {
     beforeEach(() => database.drop()
       .then(() => database.initialize()));
 
