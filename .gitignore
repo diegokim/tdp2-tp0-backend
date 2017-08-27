@@ -2,3 +2,5 @@ node_modules
 .vscode/
 npm-debug.log
 package-lock.json
+.nyc_output/
+tests/coverage/
