@@ -1,3 +1,4 @@
+
 const _ = require('lodash');
 const weatherClient = require('../client/weatherClient');
 const citiesDB = require('../dbManager/citiesDB');
@@ -12,7 +13,7 @@ module.exports.get = (cityId) => weatherClient.get(cityId)
     const weather = {
       time,
       temperature: Math.round(city.main.temp - 273.15),
-      humidity: city.main.humidity,
+      pressure: city.main.pressure,
       weather: city.weather[0].main.toLowerCase()
     }
     return weather;

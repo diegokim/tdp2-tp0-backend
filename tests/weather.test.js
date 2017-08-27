@@ -29,7 +29,7 @@ describe('weather integration tests', function () {
         const city = res.body;
 
         assert.notEqual(city.time, undefined);
-        assert.notEqual(city.humidity, undefined);
+        assert.notEqual(city.pressure, undefined);
         assert.notEqual(city.weather, undefined);
         assert.notEqual(city.temperature, undefined);
       })
