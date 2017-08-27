@@ -7,7 +7,7 @@
     "eslint": "ENV=env_test eslint ./",
     "eslint:fix": "ENV=env_test eslint --fix ./",
     "test": "npm run eslint && npm run test:app",
-    "test:app": "ENV=env_test ./node_modules/mocha/bin/mocha ./tests",
+    "test:app": "ENV=env_test nyc ./node_modules/mocha/bin/mocha ./tests",
     "start": "ENV=env_production node app",
     "starttest": "ENV=env_test node app"
   },
@@ -31,6 +31,7 @@
   "license": "ISC",
   "devDependencies": {
     "chai": "~3.5.0",
-    "mocha": "~3.3.0"
+    "mocha": "~3.3.0",
+    "nyc": "^11.1.0"
   }
 }

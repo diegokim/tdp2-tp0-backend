@@ -76,14 +76,13 @@ Mensaje:
 Respuesta:
 
 	respuesta --> 200
-	body: {
-    id: 1851632,
-    name: 'Shuzenji',
-    temperature: 289.5,
-    pressure: 1013,
-    humidity: 89,
-    weather: 'clouds'
-  }
+
+    body: {
+      time: 1.13,
+      humidity: 89,
+      temperature: 289.5,
+      weather: 'clouds'
+    }
 
 ## GET Cities
 Tipo y URI
@@ -99,15 +98,15 @@ Mensaje:
 Respuesta:
 
 	respuesta --> 200
-	body: [
-    {
-      id: 1283240,
-      name: 'Kathmandu',
-      country: 'NP'
-    },
-    {
-      id: 703363,
-      name: 'Laspi',
-      country: 'UA'
-    }
-  ]
+
+    body: [
+      {
+        id: 1283240,
+        name: 'Kathmandu',
+        country: 'NP'
+      },
+      {
+        id: 703363,
+        name: 'Laspi',
+        country: 'UA'
+      }]

@@ -1,56 +1,24 @@
-/* eslint no-undef: off */
+/* eslint no-undef: off, no-invalid-this:off */
 const assert = require('chai').assert;
 const weatherReq = require('./requests/weather.requests.js')
+const database = require('../wrappers/database');
 
-describe('weather integration tests', () => {
-  const id = 'id';
-
-  const expectedCities = [{
-    id: 1283240,
-    name: 'Kathmandu',
-    country: 'NP'
-  },
-  {
-    id: 703363,
-    name: 'Laspi',
-    country: 'UA'
-  },
-  {
-    id: 3632308,
-    name: 'Merida',
-    country: 'VE'
-  },
-  {
-    id: 473537,
-    name: 'Vinogradovo',
-    country: 'RU'
-  },
-  {
-    id: 384848,
-    name: 'Qarah Gawl al ‘Ulyā',
-    country: 'IQ'
-  },
-  {
-    id: 569143,
-    name: 'Cherkizovo',
-    country: 'RU'
-  },
-  {
-    id: 713514,
-    name: 'Alupka',
-    country: 'UA'
-  },
-  {
-    id: 2878044,
-    name: 'Lichtenrade',
-    country: 'DE'
-  }];
+describe('weather integration tests', function () {
+  this.timeout(15000);
+  const id = 1283240;
+  const keyWord = 'z';
 
   describe('GET cities list', () => {
-    it('when get cities list should return the list of the cities', () => weatherReq.list()
+    beforeEach(() => database.drop()
+      .then(() => database.initialize()));
+
+    it('when get cities list should return the list of the cities', () => weatherReq.list(keyWord)
       .then((res) => {
-        const cities = res.body;
-        assert.deepEqual(cities, expectedCities)
+        const city = res.body.cities[0];
+
+        assert.notEqual(city.id, undefined);
+        assert.notEqual(city.name, undefined);
+        assert.notEqual(city.country, undefined);
       })
     );
   });
@@ -60,7 +28,8 @@ describe('weather integration tests', () => {
       .then((res) => {
         const city = res.body;
 
-        assert.notEqual(city.humidity, undefined);
+        assert.notEqual(city.time, undefined);
+        assert.notEqual(city.pressure, undefined);
         assert.notEqual(city.weather, undefined);
         assert.notEqual(city.temperature, undefined);
       })
