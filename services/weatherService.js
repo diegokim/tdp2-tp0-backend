@@ -7,8 +7,9 @@ module.exports.get = (cityId) => weatherClient.get(cityId)
   .then((res) => {
     const city = res.body;
     const timeZone = Math.trunc(parseFloat(city.coord.lon) / 15);
-    const newDate = new Date();
-    const time = (newDate.getUTCHours() + timeZone) % 24;
+    const date = new Date();
+    let time = date.getUTCHours() + timeZone;
+    time = time < 0 ? time + 24 : time;
 
     const weather = {
       time,
